@@ -1,0 +1,24 @@
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+
+[
+ [
+    "name" : "findBagInstance",
+    "description" : "find bag instance",
+    "version" : "1.0",
+    "parameters" : [
+         "filepath" : new StringDataType(),
+         "storageSystemId" : new StringDataType()
+    ],
+    "results" : [
+        "result" : new StringDataType(),
+        "resultMessage" : new StringDataType(),
+        "bagInstanceKey" : new IntegerDataType()
+    ],
+    "displayName" : "find bag instance",
+    "eclipse:customEditor" : "org.drools.eclipse.flow.common.editor.editpart.work.SampleCustomEditor",
+    "category" : "Service",
+    "documentation" : "index.html"
+  ]
+]

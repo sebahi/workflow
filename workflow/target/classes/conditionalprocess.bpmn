@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://org.eclipse.bpmn2/default/process"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_printA" structureRef="java.lang.String" />
+  <process processType="Private" isExecutable="true" id="conditionalprocess" name="Conditional Process" >
+
+    <!-- process variables -->
+    <property id="printA" itemSubjectRef="_printA"/>
+
+    <!-- nodes -->
+    <startEvent id="StartEvent_1" name="Start Event 1"  isInterrupting="false">
+    </startEvent>
+    <endEvent id="EndEvent_1" name="End Event 1" />
+    <exclusiveGateway id="_jbpm-unique-0" name="Gateway" gatewayDirection="Diverging" >
+    </exclusiveGateway>
+    <exclusiveGateway id="_jbpm-unique-1" name="Gateway" gatewayDirection="Converging" >
+    </exclusiveGateway>
+    <scriptTask id="_jbpm-unique-2" name="Print A" scriptFormat="http://www.java.com/java" >
+      <script>java.lang.System.out.println("============A============");</script>
+    </scriptTask>
+    <scriptTask id="_jbpm-unique-3" name="Print B" scriptFormat="http://www.java.com/java" >
+      <script>java.lang.System.out.println("============B============");</script>
+    </scriptTask>
+
+    <!-- connections -->
+    <sequenceFlow id="_jbpm-unique-1-EndEvent_1" sourceRef="_jbpm-unique-1" targetRef="EndEvent_1" />
+    <sequenceFlow id="StartEvent_1-_jbpm-unique-0" sourceRef="StartEvent_1" targetRef="_jbpm-unique-0" />
+    <sequenceFlow id="_jbpm-unique-2-_jbpm-unique-1" sourceRef="_jbpm-unique-2" targetRef="_jbpm-unique-1" />
+    <sequenceFlow id="_jbpm-unique-3-_jbpm-unique-1" sourceRef="_jbpm-unique-3" targetRef="_jbpm-unique-1" />
+    <sequenceFlow id="_jbpm-unique-0-_jbpm-unique-2" sourceRef="_jbpm-unique-0" targetRef="_jbpm-unique-2" name="constraint" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return printA.equalsIgnoreCase("true");</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_jbpm-unique-0-_jbpm-unique-3" sourceRef="_jbpm-unique-0" targetRef="_jbpm-unique-3" name="constraint" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >return ! printA.equalsIgnoreCase("true");</conditionExpression>
+    </sequenceFlow>
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="conditionalprocess" >
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" >
+        <dc:Bounds x="16" y="56" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" >
+        <dc:Bounds x="370" y="56" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-0" >
+        <dc:Bounds x="96" y="56" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-1" >
+        <dc:Bounds x="289" y="56" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-2" >
+        <dc:Bounds x="177" y="16" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-3" >
+        <dc:Bounds x="177" y="96" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-1-EndEvent_1" >
+        <di:waypoint x="313" y="80" />
+        <di:waypoint x="394" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="StartEvent_1-_jbpm-unique-0" >
+        <di:waypoint x="40" y="80" />
+        <di:waypoint x="120" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-2-_jbpm-unique-1" >
+        <di:waypoint x="217" y="40" />
+        <di:waypoint x="313" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-3-_jbpm-unique-1" >
+        <di:waypoint x="217" y="120" />
+        <di:waypoint x="313" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-0-_jbpm-unique-2" >
+        <di:waypoint x="120" y="80" />
+        <di:waypoint x="217" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-0-_jbpm-unique-3" >
+        <di:waypoint x="120" y="80" />
+        <di:waypoint x="217" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

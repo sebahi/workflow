@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://org.eclipse.bpmn2/default/process"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_NoteMessage" structureRef="java.lang.String" />
+  <itemDefinition id="_NoteJson" structureRef="java.lang.String" />
+  <itemDefinition id="_NoteKey" structureRef="java.lang.String" />
+  <process processType="Private" isExecutable="true" id="restpostprocess" name="Post via REST API" >
+
+    <!-- process variables -->
+    <property id="NoteMessage" itemSubjectRef="_NoteMessage"/>
+    <property id="NoteJson" itemSubjectRef="_NoteJson"/>
+    <property id="NoteKey" itemSubjectRef="_NoteKey"/>
+
+    <!-- nodes -->
+    <startEvent id="StartEvent_1" name="Start Event 1"  isInterrupting="false">
+    </startEvent>
+    <endEvent id="EndEvent_1" name="End Event 1" />
+    <task id="_jbpm-unique-0" name="Create Note" tns:taskName="Rest" >
+      <ioSpecification>
+        <dataInput id="_jbpm-unique-0_ContentTypeInput" name="ContentType" />
+        <dataInput id="_jbpm-unique-0_UsernameInput" name="Username" />
+        <dataInput id="_jbpm-unique-0_ContentInput" name="Content" />
+        <dataInput id="_jbpm-unique-0_AuthTypeInput" name="AuthType" />
+        <dataInput id="_jbpm-unique-0_MethodInput" name="Method" />
+        <dataInput id="_jbpm-unique-0_UrlInput" name="Url" />
+        <dataInput id="_jbpm-unique-0_PasswordInput" name="Password" />
+        <dataOutput id="_jbpm-unique-0_ResultOutput" name="Result" />
+        <inputSet>
+          <dataInputRefs>_jbpm-unique-0_ContentTypeInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-0_UsernameInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-0_ContentInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-0_AuthTypeInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-0_MethodInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-0_UrlInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-0_PasswordInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_jbpm-unique-0_ResultOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_ContentTypeInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">application/x-www-form-urlencoded</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_ContentTypeInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_UsernameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">fafu</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_UsernameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_ContentInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"><![CDATA[bagKey=260857&message=#{NoteMessage}]]></from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_ContentInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_AuthTypeInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">BASIC</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_AuthTypeInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_MethodInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">POST</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_MethodInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_UrlInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">https://transferqa.loctest.gov/transfer/inventory/bag_notes.json</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_UrlInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-0_PasswordInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">password</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-0_PasswordInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_jbpm-unique-0_ResultOutput</sourceRef>
+        <targetRef>NoteJson</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <scriptTask id="_jbpm-unique-1" name="Print Note" scriptFormat="http://www.java.com/java" >
+      <script>
+              NoteKey = Long.toString(new org.json.JSONObject(NoteJson).getLong("key"));
+              kcontext.setVariable("NoteKey", NoteKey);
+              System.out.println("Created note: " + NoteJson);
+      </script>
+    </scriptTask>
+    <task id="_jbpm-unique-2" name="Delete Note" tns:taskName="Rest" >
+      <ioSpecification>
+        <dataInput id="_jbpm-unique-2_UsernameInput" name="Username" />
+        <dataInput id="_jbpm-unique-2_MethodInput" name="Method" />
+        <dataInput id="_jbpm-unique-2_UrlInput" name="Url" />
+        <dataInput id="_jbpm-unique-2_AuthTypeInput" name="AuthType" />
+        <dataInput id="_jbpm-unique-2_PasswordInput" name="Password" />
+        <dataOutput id="_jbpm-unique-2_ResultOutput" name="Result" />
+        <inputSet>
+          <dataInputRefs>_jbpm-unique-2_UsernameInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-2_MethodInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-2_UrlInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-2_AuthTypeInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-2_PasswordInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_jbpm-unique-2_ResultOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-2_UsernameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">fafu</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-2_UsernameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-2_MethodInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">DELETE</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-2_MethodInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-2_UrlInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression"><![CDATA[https://transferqa.loctest.gov/transfer/inventory/bag_note/#{NoteKey}.json]]></from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-2_UrlInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-2_PasswordInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">password</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-2_PasswordInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-2_AuthTypeInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">BASIC</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-2_AuthTypeInput</to>
+        </assignment>
+      </dataInputAssociation>
+    </task>
+    <scriptTask id="_jbpm-unique-3" name="Print Delete" >
+      <script>System.out.println("Deleted note: " + NoteKey);</script>
+    </scriptTask>
+
+    <!-- connections -->
+    <sequenceFlow id="_jbpm-unique-3-EndEvent_1" sourceRef="_jbpm-unique-3" targetRef="EndEvent_1" />
+    <sequenceFlow id="StartEvent_1-_jbpm-unique-0" sourceRef="StartEvent_1" targetRef="_jbpm-unique-0" />
+    <sequenceFlow id="_jbpm-unique-0-_jbpm-unique-1" sourceRef="_jbpm-unique-0" targetRef="_jbpm-unique-1" />
+    <sequenceFlow id="_jbpm-unique-1-_jbpm-unique-2" sourceRef="_jbpm-unique-1" targetRef="_jbpm-unique-2" />
+    <sequenceFlow id="_jbpm-unique-2-_jbpm-unique-3" sourceRef="_jbpm-unique-2" targetRef="_jbpm-unique-3" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="restpostprocess" >
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" >
+        <dc:Bounds x="94" y="94" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" >
+        <dc:Bounds x="810" y="104" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-0" >
+        <dc:Bounds x="214" y="99" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-1" >
+        <dc:Bounds x="372" y="101" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-2" >
+        <dc:Bounds x="516" y="104" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-3" >
+        <dc:Bounds x="656" y="110" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-3-EndEvent_1" >
+        <di:waypoint x="696" y="134" />
+        <di:waypoint x="834" y="128" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="StartEvent_1-_jbpm-unique-0" >
+        <di:waypoint x="118" y="118" />
+        <di:waypoint x="264" y="123" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-0-_jbpm-unique-1" >
+        <di:waypoint x="264" y="123" />
+        <di:waypoint x="412" y="125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-1-_jbpm-unique-2" >
+        <di:waypoint x="412" y="125" />
+        <di:waypoint x="566" y="128" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-2-_jbpm-unique-3" >
+        <di:waypoint x="566" y="128" />
+        <di:waypoint x="696" y="134" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

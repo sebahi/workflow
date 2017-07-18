@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://org.eclipse.bpmn2/default/process"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_ResultItemDef" structureRef="java.lang.String" />
+  <process processType="Private" isExecutable="true" id="restputprocess" name="Put via REST API" >
+
+    <!-- process variables -->
+    <property id="result" itemSubjectRef="_ResultItemDef"/>
+
+    <!-- nodes -->
+    <startEvent id="StartEvent_1" name="Start Event 1"  isInterrupting="false">
+    </startEvent>
+    <endEvent id="EndEvent_1" name="End Event 1" />
+    <task id="_jbpm-unique-9" name="REST" tns:taskName="Rest" >
+      <ioSpecification>
+        <dataInput id="_jbpm-unique-9_UsernameInput" name="Username" />
+        <dataInput id="_jbpm-unique-9_AuthTypeInput" name="AuthType" />
+        <dataInput id="_jbpm-unique-9_UrlInput" name="Url" />
+        <dataInput id="_jbpm-unique-9_PasswordInput" name="Password" />
+        <dataOutput id="_jbpm-unique-9_ResultOutput" name="Result" />
+        <inputSet>
+          <dataInputRefs>_jbpm-unique-9_UsernameInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-9_AuthTypeInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-9_UrlInput</dataInputRefs>
+          <dataInputRefs>_jbpm-unique-9_PasswordInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_jbpm-unique-9_ResultOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-9_UsernameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">fafu</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-9_UsernameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-9_AuthTypeInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">BASIC</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-9_AuthTypeInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-9_UrlInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">https://transferqa.loctest.gov/transfer/inventory/projects.json</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-9_UrlInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_jbpm-unique-9_PasswordInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">password</from>
+          <to xsi:type="tFormalExpression">_jbpm-unique-9_PasswordInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_jbpm-unique-9_ResultOutput</sourceRef>
+        <targetRef>result</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <scriptTask id="_jbpm-unique-0" name="Print result" scriptFormat="http://www.java.com/java" >
+      <script>
+            
+            System.out.println("Get projects: "+ new org.json.JSONArray(result).length());
+      </script>
+    </scriptTask>
+
+    <!-- connections -->
+    <sequenceFlow id="_jbpm-unique-0-EndEvent_1" sourceRef="_jbpm-unique-0" targetRef="EndEvent_1" />
+    <sequenceFlow id="StartEvent_1-_jbpm-unique-9" sourceRef="StartEvent_1" targetRef="_jbpm-unique-9" />
+    <sequenceFlow id="_jbpm-unique-9-_jbpm-unique-0" sourceRef="_jbpm-unique-9" targetRef="_jbpm-unique-0" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="restputprocess" >
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" >
+        <dc:Bounds x="54" y="87" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" >
+        <dc:Bounds x="597" y="81" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-9" >
+        <dc:Bounds x="221" y="82" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_jbpm-unique-0" >
+        <dc:Bounds x="429" y="85" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-0-EndEvent_1" >
+        <di:waypoint x="469" y="109" />
+        <di:waypoint x="621" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="StartEvent_1-_jbpm-unique-9" >
+        <di:waypoint x="78" y="111" />
+        <di:waypoint x="271" y="106" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-9-_jbpm-unique-0" >
+        <di:waypoint x="271" y="106" />
+        <di:waypoint x="469" y="109" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

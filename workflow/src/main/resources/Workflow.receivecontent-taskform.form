@@ -1,0 +1,99 @@
+
+<form id="765392947">
+<property name="name" value="Workflow.receivecontent-taskform.form"/>
+<property name="displayMode" value="default"/>
+<property name="status" value="0"/>
+<field position="0" name="bagId" type="InputText" id="557562506">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;bagId (bagId)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="bagId"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<field position="1" name="doBagInPlace" type="CheckBox" id="472347088">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doBagInPlace (doBagInPlace)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doBagInPlace"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="2" name="doCopy" type="CheckBox" id="556597251">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doCopy (doCopy)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doCopy"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="3" name="doDeleteFromStaging" type="CheckBox" id="971234566">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doDeleteFromStaging (doDeleteFromStaging)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doDeleteFromStaging"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="4" name="doExport" type="CheckBox" id="800654981">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doExport (doExport)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doExport"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="5" name="doInventory" type="CheckBox" id="905595649">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doInventory (doInventory)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doInventory"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="6" name="doMalwareScan" type="CheckBox" id="1383905703">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doMalwareScan (doMalwareScan)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doMalwareScan"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="7" name="doVerify" type="CheckBox" id="1080091797">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doVerify (doVerify)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doVerify"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="8" name="doWriteBagInfo" type="CheckBox" id="1231206929">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;doWriteBagInfo (doWriteBagInfo)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="doWriteBagInfo"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="9" name="numberOfCopies" type="InputTextInteger" id="804818640">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;numberOfCopies (numberOfCopies)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="numberOfCopies"/>
+<property name="fieldClass" value="java.lang.Integer"/>
+</field>
+<field position="10" name="hostServer" type="InputText" id="804818641">
+<property name="fieldRequired" value="true"/>
+<property name="label" value="quot;enquot;,quot;hostServer (hostServer)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="hostServer"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<dataHolder inputId="" name="#BBBBBB" type="dataModelerEntry" outId="bag" value="gov.loc.workflow.Bag" id="bag"/>
+<dataHolder inputId="" name="#9BCAFA" type="basicType" outId="bagExists" value="java.lang.String" id="bagExists"/>
+<dataHolder inputId="" name="#FBB767" type="basicType" outId="bagExistsRequestResponse" value="java.lang.String" id="bagExistsRequestResponse"/>
+<dataHolder inputId="" name="#E9E371" type="basicType" outId="bagId" value="java.lang.String" id="bagId"/>
+<dataHolder inputId="" name="#B29FE4" type="basicType" outId="bagRequestBody" value="java.lang.String" id="bagRequestBody"/>
+<dataHolder inputId="" name="#000000" type="basicType" outId="doBagInPlace" value="java.lang.Boolean" id="doBagInPlace"/>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="doCopy" value="java.lang.Boolean" id="doCopy"/>
+<dataHolder inputId="" name="#9BCAFA" type="basicType" outId="doDeleteFromStaging" value="java.lang.Boolean" id="doDeleteFromStaging"/>
+<dataHolder inputId="" name="#BBBBBB" type="basicType" outId="doExport" value="java.lang.Boolean" id="doExport"/>
+<dataHolder inputId="" name="#A7E690" type="basicType" outId="doInventory" value="java.lang.Boolean" id="doInventory"/>
+<dataHolder inputId="" name="#FF8881" type="basicType" outId="doMalwareScan" value="java.lang.Boolean" id="doMalwareScan"/>
+<dataHolder inputId="" name="#0000A0" type="basicType" outId="doVerify" value="java.lang.Boolean" id="doVerify"/>
+<dataHolder inputId="" name="#E9E371" type="basicType" outId="doWriteBagInfo" value="java.lang.Boolean" id="doWriteBagInfo"/>
+<dataHolder inputId="" name="#B29FE4" type="basicType" outId="numberOfCopies" value="java.lang.Integer" id="numberOfCopies"/>
+<dataHolder inputId="" name="#B29FE5" type="basicType" outId="hostServer" value="java.lang.String" id="hostServer"/>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="resubmit" value="java.lang.Boolean" id="resubmit"/>
+</form>
